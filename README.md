@@ -25,3 +25,9 @@ npm run start
 "email": "test@gmail.com",
 "password": "123456"
 }
+
+Змінні середовища:
+
+export const environment = {
+apiUrl: 'http://localhost:3001',
+};
