@@ -1,0 +1,26 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <h2>Вхід</h2>
+
+    <form (submit)="login(); $event.preventDefault()">
+      <input
+        type="email"
+        name="email"
+        placeholder="Електронна пошта"
+        [(ngModel)]="email"
+        required
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Пароль"
+        [(ngModel)]="password"
+        required
+      />
+
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <button type="submit">Увійти</button>
+    </form>
+  </div>
+</div>

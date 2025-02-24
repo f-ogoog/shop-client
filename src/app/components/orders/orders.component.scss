@@ -1,0 +1,231 @@
+.page-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 85vh;
+  min-width: 90hv;
+  background: #f8f9fa;
+  padding: 20px;
+}
+
+.orders-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  width: 250px;
+}
+
+.sort-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.sort-btn:hover {
+  background: #0056b3;
+}
+
+select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.order-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f9f9f9;
+  text-align: left;
+  transition: transform 0.2s ease;
+}
+
+.order-card:hover {
+  background: #e0f2ff;
+  transform: scale(1.03);
+}
+
+.status {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  font-size: 18px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 450px;
+  text-align: left;
+  position: relative;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+}
+
+h2 {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+h3 {
+  margin-top: 20px;
+  font-size: 18px;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.status {
+  font-weight: bold;
+  color: #007bff;
+}
+
+p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+strong {
+  font-weight: bold;
+  color: #333;
+}
+
+.product-list {
+  margin-top: 15px;
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.product-item {
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-item:last-child {
+  border-bottom: none;
+}
+
+.pay-button {
+  background: #dc3545;
+  color: white;
+  padding: 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.pay-button:hover {
+  background: #c82333;
+}
+
+.pay-button:active {
+  background: #bd2130;
+  transform: scale(0.95);
+}
+
+.declined-message {
+  color: red;
+}
+
+@media (max-width: 550px) {
+  .modal-content {
+    width: 350px;
+  }
+
+  input {
+    width: 50%;
+  }
+
+  select {
+    padding: 5px;
+    font-size: 12px;
+    width: 30%;
+  }
+}

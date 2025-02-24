@@ -1,0 +1,69 @@
+<div class="cart-container">
+  <h2>Кошик</h2>
+
+  <div *ngIf="cart.length > 0; else emptyCart">
+    <div class="products-grid">
+      <div *ngFor="let product of cart" class="product-card">
+        <span class="remove" (click)="removeFromCart(product.id)">✖</span>
+        <h3>{{ product.name }}</h3>
+        <p>Ціна: {{ product.price }} грн</p>
+        <p>
+          Кількість: {{ product.count }}
+          <span *ngIf="measurementUnits[product.measurementUnit]">
+            {{ measurementUnits[product.measurementUnit] }}
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <div class="total">
+      <h3>Загальна сума: {{ totalPrice.toFixed(2) }} грн</h3>
+      <button class="checkout" (click)="openModal()">Оформити</button>
+    </div>
+  </div>
+
+  <ng-template #emptyCart>
+    <p class="empty">Кошик порожній</p>
+  </ng-template>
+</div>
+
+<div class="modal" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <h2>Замовлення</h2>
+    <input
+      type="email"
+      placeholder="Пошта"
+      [(ngModel)]="client.email"
+      [disabled]="isAuthenticated"
+    />
+    <input type="tel" placeholder="Номер телефону" [(ngModel)]="client.phone" />
+    <input type="text" placeholder="Ім'я" [(ngModel)]="client.firstName" />
+    <input type="text" placeholder="Прізвище" [(ngModel)]="client.lastName" />
+    <input
+      type="text"
+      placeholder="По-батькові"
+      [(ngModel)]="client.middleName"
+    />
+    <input type="text" placeholder="Адреса" [(ngModel)]="client.address" />
+    <p
+      *ngIf="errorMessage"
+      class="error-message"
+      [innerHTML]="errorMessage"
+    ></p>
+
+    <button (click)="submitOrder()">Замовити</button>
+    <span class="close" (click)="closeModal()">&times;</span>
+  </div>
+</div>
+
+<div class="modal" *ngIf="isOrderModalOpen">
+  <div class="modal-content">
+    <h2>Замовлення успішно створено!</h2>
+    <h3>Номер замовлення: {{ orderNumber }}</h3>
+    <p>Загальна сума: {{ totalPrice.toFixed(2) }} грн</p>
+    <p>Знижка: {{ discount }}%</p>
+    <p>Ціна зі знижкою: {{ finalPrice.toFixed(2) }} грн</p>
+    <button class="pay-button" (click)="payOrder()">Оплатити</button>
+    <span class="close" (click)="closeOrderModal()">&times;</span>
+  </div>
+</div>

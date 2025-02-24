@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="search-container">
+    <p class="sort-button" (click)="toggleSortOrder()">⇅</p>
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="search()"
+      placeholder="Пошук продуктів..."
+      class="search-input"
+    />
+    <button *ngIf="isAdmin" class="add-btn" (click)="openCreateModal()">
+      +
+    </button>
+  </div>
+
+  <app-products-list
+    (fetchProducts)="fetchProducts()"
+    [products]="products"
+  ></app-products-list>
+
+  <div class="pagination">
+    <button (click)="goToPage(page - 1)" [disabled]="page === 1">⇦</button>
+    <span>Сторінка {{ page }} з {{ totalPages }}</span>
+    <button (click)="goToPage(page + 1)" [disabled]="page === totalPages">
+      ⇨
+    </button>
+  </div>
+</div>
+
+<div class="modal" *ngIf="showCreateModal">
+  <div class="modal-content">
+    <span class="close" (click)="closeCreateModal()">&times;</span>
+    <h2>Створити продукт</h2>
+    <input type="text" placeholder="name" [(ngModel)]="newProduct.name" />
+    <input
+      type="number"
+      placeholder="price"
+      [(ngModel)]="newProduct.price"
+      min="0.01"
+      step="0.01"
+    />
+    <select [(ngModel)]="newProduct.measurementUnit">
+      <option *ngFor="let unit of measurementUnitsKeys" [value]="unit">
+        {{ measurementUnits[unit] }}
+      </option>
+    </select>
+    <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <button (click)="createProduct()">Створити</button>
+  </div>
+</div>

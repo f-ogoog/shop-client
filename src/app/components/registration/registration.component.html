@@ -1,0 +1,60 @@
+<div class="registration-wrapper">
+  <div class="registration-container">
+    <h2>Реєстрація</h2>
+
+    <form (submit)="register(); $event.preventDefault()">
+      <input
+        type="email"
+        name="email"
+        placeholder="Електронна пошта"
+        [(ngModel)]="user.email"
+        required
+      />
+      <input
+        type="text"
+        name="firstName"
+        placeholder="Ім'я"
+        [(ngModel)]="user.firstName"
+        required
+      />
+      <input
+        type="text"
+        name="lastName"
+        placeholder="Прізвище"
+        [(ngModel)]="user.lastName"
+        required
+      />
+      <input
+        type="text"
+        name="middleName"
+        placeholder="По-батькові"
+        [(ngModel)]="user.middleName"
+      />
+      <input
+        type="tel"
+        name="phone"
+        placeholder="Номер телефону"
+        [(ngModel)]="user.phone"
+        required
+      />
+      <input
+        type="text"
+        name="address"
+        placeholder="Адреса"
+        [(ngModel)]="user.address"
+        required
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Пароль"
+        [(ngModel)]="user.password"
+        required
+      />
+
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <button type="submit">Зареєструватися</button>
+    </form>
+  </div>
+</div>

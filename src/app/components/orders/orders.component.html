@@ -1,0 +1,126 @@
+<div class="page-wrapper">
+  <div *ngIf="isAuthenticated; else notAuthenticated" class="orders-container">
+    <h2>Мої замовлення</h2>
+
+    <div class="filters">
+      <p class="sort-button" (click)="toggleSortOrder()">⇅</p>
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="search()"
+        placeholder="Пошук за номером..."
+      />
+      <select (change)="filterByStatus($event)">
+        <option *ngFor="let status of statusFilterKeys">{{ status }}</option>
+      </select>
+    </div>
+
+    <div class="orders-list">
+      <div
+        *ngFor="let order of orders"
+        class="order-card"
+        (click)="openModal(order.id)"
+      >
+        <h3>Замовлення №{{ order.number }}</h3>
+        <p>
+          Статус: <span class="status">{{ statuses[order.status] }}</span>
+        </p>
+        <p>Дата: {{ order.saleDate | date : "dd.MM.yyyy HH:mm" }}</p>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <button (click)="goToPage(page - 1)" [disabled]="page === 1">⇦</button>
+      <span>Сторінка {{ page }} з {{ totalPages }}</span>
+      <button (click)="goToPage(page + 1)" [disabled]="page === totalPages">
+        ⇨
+      </button>
+    </div>
+  </div>
+
+  <div class="modal" *ngIf="selectedOrder">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Замовлення №{{ selectedOrder.number }}</h2>
+
+      <p *ngIf="!isAdmin">
+        <strong>Статус:</strong> {{ statuses[selectedOrder.status] }}
+      </p>
+
+      <div *ngIf="isAdmin">
+        <label for="order-status"><strong>Статус:</strong></label>
+        <select
+          id="order-status"
+          [(ngModel)]="selectedOrder.status"
+          (change)="updateOrderStatus(selectedOrder.id, selectedOrder.status)"
+        >
+          <option
+            *ngFor="let statusKey of statusKeys"
+            [value]="statusesEnum[statusKey]"
+          >
+            {{ statusKey }}
+          </option>
+        </select>
+      </div>
+
+      <p
+        *ngIf="selectedOrder.status === 'declined' && !isAdmin"
+        class="declined-message"
+      >
+        Невдовзі з вами зв'яжеться адміністрація для вирішення проблеми.
+      </p>
+
+      <p>
+        <strong>Дата оформлення:</strong>
+        {{ selectedOrder.saleDate | date : "dd.MM.yyyy HH:mm" }}
+      </p>
+      <p>
+        <strong>Дата доставки:</strong>
+        {{ selectedOrder.deliveryDate | date : "dd.MM.yyyy HH:mm" }}
+      </p>
+
+      <h3>Інформація про клієнта</h3>
+      <p><strong>Ім'я:</strong> {{ selectedOrder.client.firstName }}</p>
+      <p><strong>Прізвище:</strong> {{ selectedOrder.client.lastName }}</p>
+      <p><strong>По батькові:</strong> {{ selectedOrder.client.middleName }}</p>
+      <p><strong>Пошта:</strong> {{ selectedOrder.client.email }}</p>
+      <p><strong>Телефон:</strong> {{ selectedOrder.client.phone }}</p>
+      <p><strong>Адреса:</strong> {{ selectedOrder.client.address }}</p>
+
+      <h3>Продукти у замовленні</h3>
+      <div class="product-list">
+        <div
+          *ngFor="let product of selectedOrder.products"
+          class="product-item"
+        >
+          <p>
+            <strong>{{ product.product.name }}</strong> — {{ product.count }}
+            {{ measurementUnits[product.product.measurementUnit] }}.
+          </p>
+        </div>
+      </div>
+
+      <h3>Оплата</h3>
+      <p>
+        <strong>Повна ціна:</strong>
+        {{ selectedOrder.totalPrice.toFixed(2) }} грн
+      </p>
+      <p><strong>Знижка:</strong> {{ selectedOrder.discount }} %</p>
+      <p><strong>Ціна зі знижкою:</strong> {{ discountedPrice }} грн</p>
+
+      <button
+        *ngIf="selectedOrder.status === 'created' && !isAdmin"
+        class="pay-button"
+        (click)="updateOrderStatus(selectedOrder.id, 'paid')"
+      >
+        Оплатити
+      </button>
+    </div>
+  </div>
+
+  <ng-template #notAuthenticated>
+    <div class="not-authenticated">
+      <h2>Щоб побачити свої замовлення, будь ласка, авторизуйтесь</h2>
+    </div>
+  </ng-template>
+</div>

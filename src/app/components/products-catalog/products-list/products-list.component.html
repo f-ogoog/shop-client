@@ -1,0 +1,73 @@
+<div class="products-grid">
+  <div
+    *ngFor="let product of products"
+    class="product-card"
+    (click)="openModal(product)"
+  >
+    <span
+      *ngIf="isAdmin"
+      class="delete-icon"
+      (click)="deleteProduct(product.id, $event)"
+      >✖</span
+    >
+    <h3>{{ product.name }}</h3>
+    <p>Ціна: {{ product.price }} грн</p>
+  </div>
+</div>
+
+<div class="modal" *ngIf="selectedProduct && !isAdmin">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>{{ selectedProduct.name }}</h2>
+
+    <div class="modal-body">
+      <p class="price">Ціна: {{ selectedProduct.price }} грн</p>
+
+      <div class="count">
+        <label for="count">Кількість:</label>
+        <div class="input-group">
+          <input
+            type="number"
+            id="count"
+            [(ngModel)]="count"
+            (change)="validateCount()"
+            min="1"
+          />
+          <span>
+            {{ measurementUnits[selectedProduct.measurementUnit] }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <button class="add-to-cart" (click)="addToCart()">Додати до кошика</button>
+  </div>
+</div>
+
+<div class="modal" *ngIf="selectedProduct && isAdmin">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Оновити продукт</h2>
+    <input
+      class="update-input"
+      type="text"
+      placeholder="Назва"
+      [(ngModel)]="selectedProduct.name"
+    />
+    <input
+      class="update-input"
+      type="number"
+      placeholder="Ціна"
+      [(ngModel)]="selectedProduct.price"
+      min="0.01"
+      step="0.01"
+    />
+    <select [(ngModel)]="selectedProduct.measurementUnit">
+      <option *ngFor="let unit of measurementUnitsKeys" [value]="unit">
+        {{ measurementUnits[unit] }}
+      </option>
+    </select>
+    <button (click)="updateProduct()">Оновити</button>
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </div>
+</div>

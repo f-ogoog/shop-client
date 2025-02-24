@@ -1,0 +1,84 @@
+<header class="header">
+  <nav class="nav">
+    <button class="menu-toggle" (click)="toggleMobileMenu()">☰</button>
+
+    <div class="nav-left desktop-menu">
+      <a routerLink="/products" routerLinkActive="active" class="nav-link"
+        >Каталог</a
+      >
+      <a
+        *ngIf="!isAdmin"
+        routerLink="/cart"
+        routerLinkActive="active"
+        class="nav-link"
+        >Кошик</a
+      >
+      <a routerLink="/orders" routerLinkActive="active" class="nav-link"
+        >Замовлення</a
+      >
+    </div>
+
+    <div class="nav-right desktop-menu">
+      <button *ngIf="isAuthenticated" class="logout-btn" (click)="logout()">
+        Вийти
+      </button>
+      <ng-container *ngIf="!isAuthenticated">
+        <a routerLink="/login" routerLinkActive="active" class="nav-link"
+          >Логін</a
+        >
+        <a routerLink="/registration" routerLinkActive="active" class="nav-link"
+          >Реєстрація</a
+        >
+      </ng-container>
+    </div>
+
+    <div class="mobile-menu" *ngIf="isMobileMenuOpen">
+      <a
+        routerLink="/products"
+        routerLinkActive="active"
+        class="nav-link"
+        (click)="closeMobileMenu()"
+        >Каталог</a
+      >
+      <a
+        *ngIf="!isAdmin"
+        routerLink="/cart"
+        routerLinkActive="active"
+        class="nav-link"
+        (click)="closeMobileMenu()"
+        >Кошик</a
+      >
+      <a
+        routerLink="/orders"
+        routerLinkActive="active"
+        class="nav-link"
+        (click)="closeMobileMenu()"
+        >Замовлення</a
+      >
+
+      <button
+        *ngIf="isAuthenticated"
+        class="logout-btn"
+        (click)="logout(); closeMobileMenu()"
+      >
+        Вийти
+      </button>
+      <ng-container *ngIf="!isAuthenticated">
+        <a
+          routerLink="/login"
+          routerLinkActive="active"
+          class="nav-link"
+          (click)="closeMobileMenu()"
+          >Логін</a
+        >
+        <a
+          routerLink="/registration"
+          routerLinkActive="active"
+          class="nav-link"
+          (click)="closeMobileMenu()"
+          >Реєстрація</a
+        >
+      </ng-container>
+    </div>
+  </nav>
+</header>
